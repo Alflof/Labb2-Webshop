@@ -1,6 +1,6 @@
-package se.iths.alfred.webshop.model;
+package se.iths.alfred.webshop;
 
 public class WebShopManagerTest {
 
-    
+
 }

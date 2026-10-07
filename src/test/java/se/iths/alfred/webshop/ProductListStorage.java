@@ -1,6 +1,4 @@
-package se.iths.alfred.webshop.model;
-
-import se.iths.alfred.webshop.ProductStorage;
+package se.iths.alfred.webshop;
 
 public class ProductListStorage implements ProductStorage {
 
