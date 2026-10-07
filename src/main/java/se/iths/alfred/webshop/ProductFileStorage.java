@@ -16,9 +16,8 @@ public class ProductFileStorage implements ProductStorage {
 
     @Override
     public void saveProduct(Product product) {
-//        filrad = product.toFileLine();
-//        skriv filrad sist i filen
-
+        String fileLine = product.toFileLine();
+//        skriv filrad sist i filen file på ny rad
     }
 
     @Override
