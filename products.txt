@@ -1,0 +1,2 @@
+B001;Clean Code;299.0;En bok om programmering
+B002;Korv med Bröd;20.0;En maträtt

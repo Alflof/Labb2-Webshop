@@ -20,7 +20,7 @@ public class Product {
 
     public static Product fromFileLine(String line) {
 
-//        line = "B001;Clean Code;299.0;En bok om programmering"; //strängen som kommer in
+//        line = "B001;Clean Code;299.0;En bok om programmering"; //exempel på sträng som kommer in
         String[] lines = line.split(";");
         String articleNumber = lines[0];
         String title = lines[1];

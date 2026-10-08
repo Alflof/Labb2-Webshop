@@ -8,16 +8,6 @@ public abstract class Discount {
         this.description = description;
     }
 
-    public void readDiscount(String discountCode) {
-        Discount discount = null;
-
-        if (discountCode.equals("halfprice")) {
-            discount = new HalfPriceDiscount("50% rabatt");
-        } else {
-            discount = new TenPercentDiscount("10% rabatt");
-        }
-    }
-
     public abstract double calculatePrice(double originalPrice);
 
     //---------- Getters & Setters ----------
