@@ -1,2 +1,6 @@
-B001;Clean Code;299.0;En bok om programmering
-B002;Korv med Bröd;20.0;En maträtt
+B808;Jesus;99.0;Religion
+888;Carina;333.0;LÃ¶fving
+555;Tjöpå;545.0;ÅÄÖ
+99;Ave Maria;9999.0;Fin bok
+0989;Tjohej;33.0;Ölsson
+444;TJoij;73736.0;Tjineinosd

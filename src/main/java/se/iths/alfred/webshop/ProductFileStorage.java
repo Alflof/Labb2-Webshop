@@ -23,7 +23,8 @@ public class ProductFileStorage implements ProductStorage {
         String fileLine = product.toFileLine();
         try {
             //verifiera ny rad, ska ej tömma filen
-            Files.writeString(productsFile, fileLine, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            Files.writeString(productsFile, fileLine +
+                    System.lineSeparator(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
         } catch (IOException e) {
             System.err.println("Fel - Kunde inte skriva till filen: " +e.getMessage());
@@ -32,6 +33,14 @@ public class ProductFileStorage implements ProductStorage {
 
     @Override
     public List<Product> getProducts() {
+        try {
+            List<String> lines = Files.readAllLines(productsFile);
+            for (String line : lines) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.err.println("Kunde inte läsa raderna: " + e.getMessage());
+        }
 
         /*skapa tom lista med produkter
         kontrollera om filen inte finns, om den ej finns:
