@@ -22,7 +22,6 @@ public class ProductFileStorage implements ProductStorage {
     public void saveProduct(Product product) {
         String fileLine = product.toFileLine();
         try {
-            //verifiera ny rad, ska ej tömma filen
             Files.writeString(productsFile, fileLine +
                     System.lineSeparator(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
@@ -34,10 +33,9 @@ public class ProductFileStorage implements ProductStorage {
     @Override
     public List<Product> getProducts() {
         List<Product> products = new ArrayList<>(); //Skapa tom lista med produkter
-        if (Files.notExists(productsFile)) { //Finns inte filen, returnera tomma listan
+        if (Files.notExists(productsFile)) { //Finns inte filen, returnera den tomma listan
             return products;
         }
-
         try {
             List<String> lines = Files.readAllLines(productsFile); //Läs rader från filen och stoppa i ny lista
             for (String line : lines) {
@@ -56,7 +54,7 @@ public class ProductFileStorage implements ProductStorage {
         List<Product> products = getProducts();
 
         for (Product product : products) {
-            if (product.getArticleNumber().equals(articleNumber)) {
+            if (product.getArticleNumber().equalsIgnoreCase(articleNumber)) {
                 return product;
             }
         }

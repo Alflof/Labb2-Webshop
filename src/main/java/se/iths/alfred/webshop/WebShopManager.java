@@ -10,31 +10,33 @@ import java.util.List;
 public class WebShopManager {
 
     private ProductStorage productStorage;
+    private Discount discount;
+
+    public WebShopManager(ProductStorage productStorage){
+        this.productStorage = productStorage;
+    }
 
     void startWebshop() {
-        setDiscount();
+        discount = setDiscount();
         printMenu();
-
     }
 
     public Discount setDiscount() {
-        String discountCode;
         Discount discount = null;
-        boolean keepRunning = true;
-        //felaktig loop som aldrig triggar catch. behövs ifsatser som kollar om discountCode
-        //är null eller isempty(?)
-        while (keepRunning) {
+        while (discount == null) {
             try {
-                discountCode = IO.readln("Skriv rabattkod: ");
-                if (discountCode.equalsIgnoreCase("halfprice")) {
+                String discountCode = IO.readln("Skriv rabattkod: ");
+
+                if (discountCode.isBlank()) {
+                    throw new IllegalArgumentException("Rabattkoden får inte vara tom.");
+                }
+                else if (discountCode.equalsIgnoreCase("halfprice")) {
                     discount = new HalfPriceDiscount("50% rabatt");
-                    keepRunning = false;
                 } else {
                     discount = new TenPercentDiscount("10% rabatt");
-                    keepRunning = false;
                 }
             } catch (IllegalArgumentException e) {
-                System.err.println("Fel: Skriv något. " + e.getMessage());
+                System.err.println("Fel: " +e.getMessage());
             }
         }
         IO.println(discount.getDescription());
@@ -52,25 +54,20 @@ public class WebShopManager {
 
             String choice = IO.readln();
             switch (choice){
-                case "1" -> {
-                    IO.println("case 1");
-                    addProduct();
-                }
-                case "2" -> {
-                    IO.println("case 2");
-                    getProductsFromStorage();
-                }
-                case "3" -> IO.println("case 3");
+                case "1" -> addProduct();
+                case "2" -> listProducts();
+                case "3" -> searchProducts();
                 case "4" -> {
                     IO.println("Hejdå");
                     keepRunning = false;
                 }
-                default -> IO.println("default");
+                default -> IO.println("Felaktigt val, försök igen");
             }
         }
     }
 
     void addProduct(){
+        IO.println("\nLägg till produkt");
         String articleNumber = IO.readln("Mata in artikelnummer: ");
         String title = IO.readln("Mata in titel: ");
         double price = Double.parseDouble((IO.readln("Mata in pris: ")));
@@ -79,8 +76,28 @@ public class WebShopManager {
         saveProductToStorage(product);
     }
 
-    public WebShopManager(ProductStorage productStorage){
-        this.productStorage = productStorage;
+    void listProducts(){
+        IO.println("\nLista alla produkter");
+        List<Product> products = getProductsFromStorage();
+        for (Product product : products){
+            double discountedPrice = discount.calculatePrice(product.getPrice());
+            IO.println(product.getArticleNumber()
+                    + ": " + product.getTitle()
+                    + " (" + discountedPrice + " kr)"
+                    + " - " + product.getDescription());
+        }
+    }
+
+    void searchProducts(){
+        IO.println("\nVisa information om en produkt");
+        String productId = IO.readln("Mata in produktens artikelnummer: ");
+        Product product = getProductFromStorage(productId);
+        double discountedPrice = discount.calculatePrice(product.getPrice());
+        IO.println(product.getArticleNumber()
+                + ": " + product.getTitle()
+                + " (" + discountedPrice + " kr)"
+                + " - " + product.getDescription());
+
     }
 
     void saveProductToStorage(Product product) {

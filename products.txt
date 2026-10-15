@@ -1,6 +1,8 @@
-B808;Jesus;99.0;Religion
-888;Carina;333.0;LÃ¶fving
-555;Tjöpå;545.0;ÅÄÖ
-99;Ave Maria;9999.0;Fin bok
-0989;Tjohej;33.0;Ölsson
-444;TJoij;73736.0;Tjineinosd
+A000;Jesus;100.0;Hans dagbok
+B000;Carina;200.0;Hon har skrivit
+C000;Tjöpå;300.0;Test av bokstäver
+D000;Ave Maria;400.0;En fin och dyr bok
+E000;Tjohej;500.0;Hur man hälsar
+F000;Korv;600.0;Hur man gör dem
+G000;Engelska;700.0;Lär dig
+H000;Gud;800.0;Om religion och så

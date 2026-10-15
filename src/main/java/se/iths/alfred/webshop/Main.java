@@ -2,7 +2,7 @@ package se.iths.alfred.webshop;
 
 public class Main {
 
-    //Kommentar för att hålla koll på vilken sida i labbpdf jag är på: 36
+    //Labbpdfen progress, har gjort sidor till och med 49
 
     static void main() {
         ProductStorage productStorage = new ProductFileStorage();

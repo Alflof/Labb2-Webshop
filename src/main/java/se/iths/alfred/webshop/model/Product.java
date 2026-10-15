@@ -19,17 +19,13 @@ public class Product {
     }
 
     public static Product fromFileLine(String line) {
-
-//        line = "B001;Clean Code;299.0;En bok om programmering"; //exempel på sträng som kommer in
         String[] lines = line.split(";");
         String articleNumber = lines[0];
         String title = lines[1];
         double price = Double.parseDouble(lines[2]);
         String description = lines[3];
-
         return new Product(articleNumber, title, price, description);
     }
-
 
     //---------- Getters & setters ----------
     public String getArticleNumber() {
