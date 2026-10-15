@@ -72,18 +72,6 @@ public class WebShopManager {
     }
 
     void listProducts(){
-//        //V1
-//        outInputHandler.info("\nLista alla produkter");
-//        List<Product> products = getProductsFromStorage();
-//        for (Product product : products){
-//            double discountedPrice = discount.calculatePrice(product.getPrice());
-//            outInputHandler.info(product.getArticleNumber()
-//                    + ": " + product.getTitle()
-//                    + " (" + discountedPrice + " kr)"
-//                    + " - " + product.getDescription());
-//        }
-
-        //V2
         String allProducts = "Alla produkter:\n";
         List<Product> products = getProductsFromStorage();
         for (Product product : products){

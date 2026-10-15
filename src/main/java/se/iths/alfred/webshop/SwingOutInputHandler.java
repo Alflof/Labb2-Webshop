@@ -24,29 +24,3 @@ public class SwingOutInputHandler implements OutInputHandler {
             4. Avsluta""");
     }
 }
-
-//        IO read: String test= JOptionPane.showInputDialog(null, "Skriv något fint:");
-//        IO print: JOptionPane.showMessageDialog(null, test);
-
-//    void printMenu(){
-//        boolean keepRunning = true;
-//        while (keepRunning) {
-//            IO.println("\nVälj:");
-//            IO.println("1. Lägg till produkt");
-//            IO.println("2. Lista alla produkter");
-//            IO.println("3. Visa information om en produkt");
-//            IO.println("4. Avsluta");
-//
-//            String choice = IO.readln();
-//            switch (choice){
-//                case "1" -> addProduct();
-//                case "2" -> listProducts();
-//                case "3" -> searchProducts();
-//                case "4" -> {
-//                    IO.println("Hejdå");
-//                    keepRunning = false;
-//                }
-//                default -> IO.println("Felaktigt val, försök igen");
-//            }
-//        }
-//    }

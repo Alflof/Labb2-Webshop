@@ -9,3 +9,4 @@ H000;Gud;800.0;Om religion och så
 L000;Korvbageriet 2;900.0;Den spännande fortsättningen
 V000;Gurkornas hämnd;800.0;Barnbok om grönsaker
 W000;;333.0;gfsdfg
+C933;Ostbollar;50.0;De är goda
