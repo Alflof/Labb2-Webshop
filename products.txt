@@ -6,3 +6,6 @@ E000;Tjohej;500.0;Hur man hälsar
 F000;Korv;600.0;Hur man gör dem
 G000;Engelska;700.0;Lär dig
 H000;Gud;800.0;Om religion och så
+L000;Korvbageriet 2;900.0;Den spännande fortsättningen
+V000;Gurkornas hämnd;800.0;Barnbok om grönsaker
+W000;;333.0;gfsdfg

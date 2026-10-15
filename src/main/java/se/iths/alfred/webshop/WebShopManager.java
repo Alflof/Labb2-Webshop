@@ -10,10 +10,12 @@ import java.util.List;
 public class WebShopManager {
 
     private ProductStorage productStorage;
-    private Discount discount;
+    private OutInputHandler outInputHandler;
+    private Discount discount; //ÄR DETTA KORREKT? NÄMNS INTE VAR JAG SKA SPARA UNDAN DISCOUNT I PDFEN
 
-    public WebShopManager(ProductStorage productStorage){
+    public WebShopManager(ProductStorage productStorage, OutInputHandler outInputHandler){
         this.productStorage = productStorage;
+        this.outInputHandler = outInputHandler;
     }
 
     void startWebshop() {
@@ -25,8 +27,7 @@ public class WebShopManager {
         Discount discount = null;
         while (discount == null) {
             try {
-                String discountCode = IO.readln("Skriv rabattkod: ");
-
+                String discountCode = outInputHandler.prompt("Skriv rabattkod: ");
                 if (discountCode == null || discountCode.isBlank() ) {
                     throw new IllegalArgumentException("Rabattkoden får inte vara tom.");
                 }
@@ -39,61 +40,69 @@ public class WebShopManager {
                 System.err.println("Fel: " +e.getMessage());
             }
         }
-        IO.println(discount.getDescription());
+        outInputHandler.info(discount.getDescription());
         return discount;
     }
 
     void printMenu(){
         boolean keepRunning = true;
         while (keepRunning) {
-            IO.println("\nVälj:");
-            IO.println("1. Lägg till produkt");
-            IO.println("2. Lista alla produkter");
-            IO.println("3. Visa information om en produkt");
-            IO.println("4. Avsluta");
-
-            String choice = IO.readln();
+            String choice = outInputHandler.menu();
             switch (choice){
                 case "1" -> addProduct();
                 case "2" -> listProducts();
                 case "3" -> searchProducts();
                 case "4" -> {
-                    IO.println("Hejdå");
+                    outInputHandler.info("Hejdå");
                     keepRunning = false;
                 }
-                default -> IO.println("Felaktigt val, försök igen");
+                default -> outInputHandler.info("Felaktigt val, försök igen");
             }
         }
     }
 
-    void addProduct(){
-        IO.println("\nLägg till produkt");
-        String articleNumber = IO.readln("Mata in artikelnummer: ");
-        String title = IO.readln("Mata in titel: ");
-        double price = Double.parseDouble((IO.readln("Mata in pris: ")));
-        String description = IO.readln("Mata in beskrivning: ");
+    void addProduct(){ //För varje stringinmatning, separat metod som verifierar?
+        outInputHandler.info("\nLägg till produkt");
+        String articleNumber = outInputHandler.prompt("Mata in artikelnummer: ");
+        String title = outInputHandler.prompt("Mata in titel: ");
+        double price = Double.parseDouble((outInputHandler.prompt("Mata in pris: ")));
+        String description = outInputHandler.prompt("Mata in beskrivning: ");
         Product product = new Product(articleNumber, title, price, description);
         saveProductToStorage(product);
     }
 
     void listProducts(){
-        IO.println("\nLista alla produkter");
+//        //V1
+//        outInputHandler.info("\nLista alla produkter");
+//        List<Product> products = getProductsFromStorage();
+//        for (Product product : products){
+//            double discountedPrice = discount.calculatePrice(product.getPrice());
+//            outInputHandler.info(product.getArticleNumber()
+//                    + ": " + product.getTitle()
+//                    + " (" + discountedPrice + " kr)"
+//                    + " - " + product.getDescription());
+//        }
+
+        //V2
+        String allProducts = "Alla produkter:\n";
         List<Product> products = getProductsFromStorage();
         for (Product product : products){
             double discountedPrice = discount.calculatePrice(product.getPrice());
-            IO.println(product.getArticleNumber()
+            allProducts += product.getArticleNumber()
                     + ": " + product.getTitle()
                     + " (" + discountedPrice + " kr)"
-                    + " - " + product.getDescription());
+                    + " - " + product.getDescription() + "\n";
         }
+        outInputHandler.info(allProducts);
+
     }
 
-    void searchProducts(){
-        IO.println("\nVisa information om en produkt");
-        String productId = IO.readln("Mata in produktens artikelnummer: ");
+    void searchProducts(){ //Saknar felmeddelande om productId misslyckas
+        outInputHandler.info("\nVisa information om en produkt");
+        String productId = outInputHandler.prompt("Mata in produktens artikelnummer: ");
         Product product = getProductFromStorage(productId);
         double discountedPrice = discount.calculatePrice(product.getPrice());
-        IO.println(product.getArticleNumber()
+        outInputHandler.info(product.getArticleNumber()
                 + ": " + product.getTitle()
                 + " (" + discountedPrice + " kr)"
                 + " - " + product.getDescription());

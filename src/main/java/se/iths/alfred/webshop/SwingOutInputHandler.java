@@ -16,13 +16,12 @@ public class SwingOutInputHandler implements OutInputHandler {
 
     @Override
     public String menu() {
-        info("""
-                Välj:);
-        1. Lägg till produkt
-        2. Lista alla produkter
-        3. Visa information om en produkt
-        4. Avsluta""");
-        return JOptionPane.showInputDialog(null, "Gör ett menyval med siffrorna 1-4");
+        return prompt("""
+            Välj:
+            1. Lägg till produkt
+            2. Lista alla produkter
+            3. Visa information om en produkt
+            4. Avsluta""");
     }
 }
 

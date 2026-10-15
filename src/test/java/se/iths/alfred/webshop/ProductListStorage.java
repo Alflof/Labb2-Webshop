@@ -1,28 +1,35 @@
 package se.iths.alfred.webshop;
 
+import org.junit.jupiter.api.Test;
 import se.iths.alfred.webshop.model.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductListStorage implements ProductStorage {
 
+    List<Product> products = new ArrayList<>(); //ska den vara private?
 
+    @Test
     @Override
     public void saveProduct(Product product) {
-
+        products.add(product);
     }
 
+    @Test
     @Override
     public List<Product> getProducts() {
-        return List.of();
+        return products;
     }
 
+    @Test
     @Override
     public Product getProduct(String articleNumber) {
+        for (Product product : products){
+            if (product.getArticleNumber().equalsIgnoreCase(articleNumber)){
+                return product;
+            }
+        }
         return null;
     }
 }
-
-//OBS denna klass var helt tom tills jag skulle börja skriva tester för discount
-//Tryckte på en knapp för att lägga t ill metoderna och overrides automatiskt
-//Varför detta hände nu och inte när jag försökte köra Main vet jag inte
