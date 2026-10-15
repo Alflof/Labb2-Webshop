@@ -2,7 +2,7 @@ package se.iths.alfred.webshop;
 
 public class Main {
 
-    //Labbpdfen progress, har gjort sidor till och med 49
+    //Labbpdfen progress, har gjort sidor till och med 62
 
     static void main() {
         ProductStorage productStorage = new ProductFileStorage();

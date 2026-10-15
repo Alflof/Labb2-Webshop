@@ -27,7 +27,7 @@ public class WebShopManager {
             try {
                 String discountCode = IO.readln("Skriv rabattkod: ");
 
-                if (discountCode.isBlank()) {
+                if (discountCode == null || discountCode.isBlank() ) {
                     throw new IllegalArgumentException("Rabattkoden får inte vara tom.");
                 }
                 else if (discountCode.equalsIgnoreCase("halfprice")) {
