@@ -11,11 +11,6 @@ import java.util.List;
 
 public class ProductFileStorage implements ProductStorage {
 
-//    Produkterna ska sparas i filen som rader med semikolon-separerade värden:
-//    B001;Clean Code;299.0;En bok om programmering
-//    E001;Hörlurar;499.0;Trådlösa hörlurar
-//    C001;T-shirt;149.0;Svart t-shirt
-
     private Path productsFile = Path.of("products.txt");
 
     @Override

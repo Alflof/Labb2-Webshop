@@ -20,26 +20,25 @@ public class WebShopManager {
 
     void startWebshop() {
         discount = setDiscount();
+        if (discount == null){
+            outInputHandler.info("Ingen rabattkod valdes. Programmet avslutas.");
+            return;
+        }
         printMenu();
     }
 
     public Discount setDiscount() {
-        Discount discount = null;
-        while (discount == null) {
-            try {
-                String discountCode = outInputHandler.prompt("Skriv rabattkod: ");
-                if (discountCode == null || discountCode.isBlank() ) {
-                    throw new IllegalArgumentException("Rabattkoden får inte vara tom.");
-                }
-                else if (discountCode.equalsIgnoreCase("halfprice")) {
-                    discount = new HalfPriceDiscount("50% rabatt");
-                } else {
-                    discount = new TenPercentDiscount("10% rabatt");
-                }
-            } catch (IllegalArgumentException e) {
-                System.err.println("Fel: " +e.getMessage());
-            }
+        String discountCode = validateString("Skriv din rabattkod: ");
+        if (discountCode == null){
+            return null;
         }
+
+        if (discountCode.equalsIgnoreCase("halfprice")){
+            discount = new HalfPriceDiscount("Din rabatt: 50%");
+        } else {
+            discount = new TenPercentDiscount("Din rabatt: 10%");
+        }
+
         outInputHandler.info(discount.getDescription());
         return discount;
     }
@@ -48,6 +47,10 @@ public class WebShopManager {
         boolean keepRunning = true;
         while (keepRunning) {
             String choice = outInputHandler.menu();
+            if (choice == null){
+                outInputHandler.info("Hejdå");
+                break;
+            }
             switch (choice){
                 case "1" -> addProduct();
                 case "2" -> listProducts();
@@ -61,12 +64,24 @@ public class WebShopManager {
         }
     }
 
-    void addProduct(){ //För varje stringinmatning, separat metod som verifierar?
+    void addProduct() {
         outInputHandler.info("\nLägg till produkt");
-        String articleNumber = outInputHandler.prompt("Mata in artikelnummer: ");
-        String title = outInputHandler.prompt("Mata in titel: ");
-        double price = Double.parseDouble((outInputHandler.prompt("Mata in pris: ")));
-        String description = outInputHandler.prompt("Mata in beskrivning: ");
+        String articleNumber = validateString("Mata in artikelnummer: ");
+        if (articleNumber == null) {
+            return;
+        }
+        String title = validateString("Mata in titel: ");
+        if (title == null){
+            return;
+        }
+        Double price = validateDouble("Mata in pris:");
+        if (price == null){
+            return;
+        }
+        String description = validateString("Mata in beskrivning: ");
+        if (description == null){
+            return;
+        }
         Product product = new Product(articleNumber, title, price, description);
         saveProductToStorage(product);
     }
@@ -87,7 +102,10 @@ public class WebShopManager {
 
     void searchProducts(){ //Saknar felmeddelande om productId misslyckas
         outInputHandler.info("\nVisa information om en produkt");
-        String productId = outInputHandler.prompt("Mata in produktens artikelnummer: ");
+        String productId = validateString("Mata in produktens artikelnummer: ");
+        if (productId == null){
+            return;
+        }
         Product product = getProductFromStorage(productId);
         double discountedPrice = discount.calculatePrice(product.getPrice());
         outInputHandler.info(product.getArticleNumber()
@@ -109,5 +127,34 @@ public class WebShopManager {
         return productStorage.getProduct(articleNumber);
     }
 
+    private String validateString(String promptText){
+        while (true) {
+            String text = outInputHandler.prompt(promptText);
+            if (text == null) {
+                return null;
+            }
+            if (!text.isBlank()){
+                return text;
+            }
+            outInputHandler.info("Fel: Du måste skriva en text");
+        }
+    }
 
+    private Double validateDouble(String promptText){
+        while (true){
+            String text = outInputHandler.prompt(promptText);
+            if (text == null){
+                return null;
+            }
+            if (text.isBlank()){
+                outInputHandler.info("Fel: Du måste skriva ett tal");
+                continue; //VARFÖR CONTINUE HÄR?
+            }
+            try {
+                return Double.parseDouble(text);
+            } catch (NumberFormatException e) {
+                outInputHandler.info("Fel: Använd endast siffror, t ex \"500\"");
+            }
+        }
+    }
 }
