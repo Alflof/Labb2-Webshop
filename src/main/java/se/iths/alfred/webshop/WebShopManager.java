@@ -101,12 +101,16 @@ public class WebShopManager {
     }
 
     void searchProducts(){ //Saknar felmeddelande om productId misslyckas
-        outInputHandler.info("\nVisa information om en produkt");
+        outInputHandler.info("Visa information om en produkt");
         String productId = validateString("Mata in produktens artikelnummer: ");
         if (productId == null){
             return;
         }
         Product product = getProductFromStorage(productId);
+        if (product == null){
+            outInputHandler.info("Ingen produkt med artikelnummer " + productId + " hittades.");
+            return;
+        }
         double discountedPrice = discount.calculatePrice(product.getPrice());
         outInputHandler.info(product.getArticleNumber()
                 + ": " + product.getTitle()
