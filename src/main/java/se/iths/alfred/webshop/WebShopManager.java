@@ -48,7 +48,7 @@ public class WebShopManager {
         while (keepRunning) {
             String choice = outInputHandler.menu();
             if (choice == null){
-                outInputHandler.info("Hejdå");
+                outInputHandler.info("Hejdå!");
                 break;
             }
             switch (choice){
@@ -56,10 +56,10 @@ public class WebShopManager {
                 case "2" -> listProducts();
                 case "3" -> searchProducts();
                 case "4" -> {
-                    outInputHandler.info("Hejdå");
+                    outInputHandler.info("Hejdå!");
                     keepRunning = false;
                 }
-                default -> outInputHandler.info("Felaktigt val, försök igen");
+                default -> outInputHandler.info("Felaktigt val. Försök igen.");
             }
         }
     }
@@ -70,6 +70,16 @@ public class WebShopManager {
         if (articleNumber == null) {
             return;
         }
+        articleNumber = articleNumber.toUpperCase();
+        Product existingProduct = getProductFromStorage(articleNumber);
+        if (existingProduct != null)
+        {
+            outInputHandler.info("Artikeln finns redan - "
+                    + existingProduct.getArticleNumber()
+                    + ": " + existingProduct.getTitle());
+            return;
+        }
+
         String title = validateString("Mata in titel: ");
         if (title == null){
             return;
@@ -140,7 +150,7 @@ public class WebShopManager {
             if (!text.isBlank()){
                 return text;
             }
-            outInputHandler.info("Fel: Du måste skriva en text");
+            outInputHandler.info("Fel: Textfältet kan inte lämnas tomt.");
         }
     }
 
@@ -151,13 +161,13 @@ public class WebShopManager {
                 return null;
             }
             if (text.isBlank()){
-                outInputHandler.info("Fel: Du måste skriva ett tal");
+                outInputHandler.info("Fel: Textfältet kan inte lämnas tomt.");
                 continue; //VARFÖR CONTINUE HÄR?
             }
             try {
                 return Double.parseDouble(text);
             } catch (NumberFormatException e) {
-                outInputHandler.info("Fel: Använd endast siffror, t ex \"500\"");
+                outInputHandler.info("Fel: Använd endast siffror, t ex \"500\".");
             }
         }
     }

@@ -13,3 +13,5 @@ C933;Ostbollar;50.0;De är goda
 Z890;Carp;999.0;En karp
 X888;Obetald Övertid;0.0;Skräckbok
 ffffffffffff;gggggggggg;444444.0;22222222
+c345;fsf;33.0;fdsfdsf
+AAA000;ssfd;444.0;fdsd
