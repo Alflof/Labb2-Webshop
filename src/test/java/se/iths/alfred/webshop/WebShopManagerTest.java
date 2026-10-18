@@ -9,7 +9,7 @@ public class WebShopManagerTest {
     @Test
     void saveTwoProductsAndCheckSize(){
         ProductStorage storage = new ProductListStorage();
-        OutInputHandler outInputHandler = new SwingOutInputHandler();
+        OutInputHandler outInputHandler = new ConsoleOutInputHandler();
         WebShopManager webShopManager = new WebShopManager(storage, outInputHandler);
 
         Product product1 = new Product("Z000", "title1", 500, "description1");
@@ -23,7 +23,7 @@ public class WebShopManagerTest {
     @Test
     void getProductFromArticleNumber(){
         ProductStorage storage = new ProductListStorage();
-        OutInputHandler outInputHandler = new SwingOutInputHandler();
+        OutInputHandler outInputHandler = new ConsoleOutInputHandler();
         WebShopManager webShopManager = new WebShopManager(storage, outInputHandler);
 
         Product product1 = new Product("Z000", "title1", 500, "description1");
@@ -36,7 +36,7 @@ public class WebShopManagerTest {
         @Test
         void checkMissingProductReturnNull(){
             ProductStorage storage = new ProductListStorage();
-            OutInputHandler outInputHandler = new SwingOutInputHandler();
+            OutInputHandler outInputHandler = new ConsoleOutInputHandler();
             WebShopManager webShopManager = new WebShopManager(storage, outInputHandler);
             Product fetchedProduct = webShopManager.getProductFromStorage("Z000");
 

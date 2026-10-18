@@ -8,10 +8,7 @@ G000;Engelska;700.0;Lär dig
 H000;Gud;800.0;Om religion och så
 L000;Korvbageriet 2;900.0;Den spännande fortsättningen
 V000;Gurkornas hämnd;800.0;Barnbok om grönsaker
-W000;;333.0;gfsdfg
 C933;Ostbollar;50.0;De är goda
 Z890;Carp;999.0;En karp
 X888;Obetald Övertid;0.0;Skräckbok
-ffffffffffff;gggggggggg;444444.0;22222222
-c345;fsf;33.0;fdsfdsf
-AAA000;ssfd;444.0;fdsd
+X999;Soltorkad;99.0;Tomatens berättelse

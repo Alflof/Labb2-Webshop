@@ -103,7 +103,8 @@ public class WebShopManager {
             double discountedPrice = discount.calculatePrice(product.getPrice());
             allProducts += product.getArticleNumber()
                     + ": " + product.getTitle()
-                    + " (" + discountedPrice + " kr)"
+                    + " (" + product.getPrice() + " kr)"
+                    + " [Ditt pris: " + discountedPrice + " kr]"
                     + " - " + product.getDescription() + "\n";
         }
         outInputHandler.info(allProducts);
@@ -124,7 +125,8 @@ public class WebShopManager {
         double discountedPrice = discount.calculatePrice(product.getPrice());
         outInputHandler.info(product.getArticleNumber()
                 + ": " + product.getTitle()
-                + " (" + discountedPrice + " kr)"
+                + " (" + product.getPrice() + " kr)"
+                + " [Ditt pris: " + discountedPrice + " kr]"
                 + " - " + product.getDescription());
 
     }
