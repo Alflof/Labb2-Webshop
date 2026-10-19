@@ -13,14 +13,14 @@ public class WebShopManager {
     private OutInputHandler outInputHandler;
     private Discount discount; //ÄR DETTA KORREKT? NÄMNS INTE VAR JAG SKA SPARA UNDAN DISCOUNT I PDFEN
 
-    public WebShopManager(ProductStorage productStorage, OutInputHandler outInputHandler){
+    public WebShopManager(ProductStorage productStorage, OutInputHandler outInputHandler) {
         this.productStorage = productStorage;
         this.outInputHandler = outInputHandler;
     }
 
     void startWebshop() {
         discount = setDiscount();
-        if (discount == null){
+        if (discount == null) {
             outInputHandler.info("Ingen rabattkod valdes. Programmet avslutas.");
             return;
         }
@@ -29,11 +29,11 @@ public class WebShopManager {
 
     public Discount setDiscount() {
         String discountCode = validateString("Skriv din rabattkod: ");
-        if (discountCode == null){
+        if (discountCode == null) {
             return null;
         }
 
-        if (discountCode.equalsIgnoreCase("halfprice")){
+        if (discountCode.equalsIgnoreCase("halfprice")) {
             discount = new HalfPriceDiscount("Din rabatt: 50%");
         } else {
             discount = new TenPercentDiscount("Din rabatt: 10%");
@@ -43,15 +43,15 @@ public class WebShopManager {
         return discount;
     }
 
-    void printMenu(){
+    void printMenu() {
         boolean keepRunning = true;
         while (keepRunning) {
             String choice = outInputHandler.menu();
-            if (choice == null){
+            if (choice == null) {
                 outInputHandler.info("Hejdå!");
                 break;
             }
-            switch (choice){
+            switch (choice) {
                 case "1" -> addProduct();
                 case "2" -> listProducts();
                 case "3" -> searchProducts();
@@ -68,12 +68,12 @@ public class WebShopManager {
         outInputHandler.info("\nLägg till produkt");
         String articleNumber = validateString("Mata in artikelnummer: ");
         if (articleNumber == null) {
+            outInputHandler.info("Du avbröt processen. Ingen ny produkt läggs till.");
             return;
         }
         articleNumber = articleNumber.toUpperCase();
         Product existingProduct = getProductFromStorage(articleNumber);
-        if (existingProduct != null)
-        {
+        if (existingProduct != null) {
             outInputHandler.info("Artikeln finns redan - "
                     + existingProduct.getArticleNumber()
                     + ": " + existingProduct.getTitle());
@@ -81,25 +81,32 @@ public class WebShopManager {
         }
 
         String title = validateString("Mata in titel: ");
-        if (title == null){
+        if (title == null) {
+            outInputHandler.info("Du avbröt processen. Ingen ny produkt läggs till.");
             return;
         }
         Double price = validateDouble("Mata in pris:");
-        if (price == null){
+        if (price == null) {
+            outInputHandler.info("Du avbröt processen. Ingen ny produkt läggs till.");
             return;
         }
         String description = validateString("Mata in beskrivning: ");
-        if (description == null){
+        if (description == null) {
+            outInputHandler.info("Du avbröt processen. Ingen ny produkt läggs till.");
             return;
         }
         Product product = new Product(articleNumber, title, price, description);
         saveProductToStorage(product);
+        outInputHandler.info("Produkt tillagd: " + articleNumber
+                + ": " + title
+                + " (" + price + " kr)"
+                + " - " + description);
     }
 
-    void listProducts(){
+    void listProducts() {
         String allProducts = "Alla produkter:\n";
         List<Product> products = getProductsFromStorage();
-        for (Product product : products){
+        for (Product product : products) {
             double discountedPrice = discount.calculatePrice(product.getPrice());
             allProducts += product.getArticleNumber()
                     + ": " + product.getTitle()
@@ -111,14 +118,14 @@ public class WebShopManager {
 
     }
 
-    void searchProducts(){ //Saknar felmeddelande om productId misslyckas
+    void searchProducts() { //Saknar felmeddelande om productId misslyckas
         outInputHandler.info("Visa information om en produkt");
         String productId = validateString("Mata in produktens artikelnummer: ");
-        if (productId == null){
+        if (productId == null) {
             return;
         }
         Product product = getProductFromStorage(productId);
-        if (product == null){
+        if (product == null) {
             outInputHandler.info("Ingen produkt med artikelnummer " + productId + " hittades.");
             return;
         }
@@ -143,26 +150,26 @@ public class WebShopManager {
         return productStorage.getProduct(articleNumber);
     }
 
-    private String validateString(String promptText){
+    private String validateString(String promptText) {
         while (true) {
             String text = outInputHandler.prompt(promptText);
             if (text == null) {
                 return null;
             }
-            if (!text.isBlank()){
+            if (!text.isBlank()) {
                 return text;
             }
             outInputHandler.info("Fel: Textfältet kan inte lämnas tomt.");
         }
     }
 
-    private Double validateDouble(String promptText){
-        while (true){
+    private Double validateDouble(String promptText) {
+        while (true) {
             String text = outInputHandler.prompt(promptText);
-            if (text == null){
+            if (text == null) {
                 return null;
             }
-            if (text.isBlank()){
+            if (text.isBlank()) {
                 outInputHandler.info("Fel: Textfältet kan inte lämnas tomt.");
                 continue; //VARFÖR CONTINUE HÄR?
             }
