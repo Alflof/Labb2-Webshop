@@ -27,12 +27,12 @@ public class ProductFileStorage implements ProductStorage {
 
     @Override
     public List<Product> getProducts() {
-        List<Product> products = new ArrayList<>(); //Skapa tom lista med produkter
-        if (Files.notExists(productsFile)) { //Finns inte filen, returnera den tomma listan
+        List<Product> products = new ArrayList<>();
+        if (Files.notExists(productsFile)) {
             return products;
         }
         try {
-            List<String> lines = Files.readAllLines(productsFile); //Läs rader från filen och stoppa i ny lista
+            List<String> lines = Files.readAllLines(productsFile);
             for (String line : lines) {
                 Product product = Product.fromFileLine(line);
                 products.add(product);
@@ -40,7 +40,6 @@ public class ProductFileStorage implements ProductStorage {
         } catch (IOException e) {
             System.err.println("Kunde inte läsa raderna: " + e.getMessage());
         }
-
         return products;
     }
 

@@ -4,7 +4,7 @@ public class Main {
 
     //To do
     // - Se över static, private, osv på alla metoder
-    // - Discount-katastrofen
+    //- Rad 10 i ProductListStorage
 
     static void main() {
         ProductStorage productStorage = new ProductFileStorage();

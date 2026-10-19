@@ -11,7 +11,7 @@ public class WebShopManager {
 
     private ProductStorage productStorage;
     private OutInputHandler outInputHandler;
-    private Discount discount; //ÄR DETTA KORREKT? NÄMNS INTE VAR JAG SKA SPARA UNDAN DISCOUNT I PDFEN
+    private Discount discount;
 
     public WebShopManager(ProductStorage productStorage, OutInputHandler outInputHandler) {
         this.productStorage = productStorage;
@@ -38,7 +38,6 @@ public class WebShopManager {
         } else {
             discount = new TenPercentDiscount("Din rabatt: 10%");
         }
-
         outInputHandler.info(discount.getDescription());
         return discount;
     }
@@ -118,15 +117,15 @@ public class WebShopManager {
 
     }
 
-    void searchProducts() { //Saknar felmeddelande om productId misslyckas
+    void searchProducts() {
         outInputHandler.info("Visa information om en produkt");
-        String productId = validateString("Mata in produktens artikelnummer: ");
-        if (productId == null) {
+        String articleNumber = validateString("Mata in produktens artikelnummer: ");
+        if (articleNumber == null) {
             return;
         }
-        Product product = getProductFromStorage(productId);
+        Product product = getProductFromStorage(articleNumber);
         if (product == null) {
-            outInputHandler.info("Ingen produkt med artikelnummer " + productId + " hittades.");
+            outInputHandler.info("Ingen produkt med artikelnummer " + articleNumber + " hittades.");
             return;
         }
         double discountedPrice = discount.calculatePrice(product.getPrice());
@@ -171,7 +170,7 @@ public class WebShopManager {
             }
             if (text.isBlank()) {
                 outInputHandler.info("Fel: Textfältet kan inte lämnas tomt.");
-                continue; //VARFÖR CONTINUE HÄR?
+                continue;
             }
             try {
                 return Double.parseDouble(text);
