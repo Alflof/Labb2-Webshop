@@ -64,10 +64,11 @@ public class WebShopManager {
     }
 
     void addProduct() {
+        String cancel = "Du avbröt processen. Ingen ny produkt läggs till.";
         outInputHandler.info("\nLägg till produkt");
         String articleNumber = validateString("Mata in artikelnummer: ");
         if (articleNumber == null) {
-            outInputHandler.info("Du avbröt processen. Ingen ny produkt läggs till.");
+            outInputHandler.info(cancel);
             return;
         }
         articleNumber = articleNumber.toUpperCase();
@@ -81,17 +82,17 @@ public class WebShopManager {
 
         String title = validateString("Mata in titel: ");
         if (title == null) {
-            outInputHandler.info("Du avbröt processen. Ingen ny produkt läggs till.");
+            outInputHandler.info(cancel);
             return;
         }
         Double price = validateDouble("Mata in pris:");
         if (price == null) {
-            outInputHandler.info("Du avbröt processen. Ingen ny produkt läggs till.");
+            outInputHandler.info(cancel);
             return;
         }
         String description = validateString("Mata in beskrivning: ");
         if (description == null) {
-            outInputHandler.info("Du avbröt processen. Ingen ny produkt läggs till.");
+            outInputHandler.info(cancel);
             return;
         }
         Product product = new Product(articleNumber, title, price, description);
