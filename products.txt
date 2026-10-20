@@ -1,7 +1,7 @@
 A000;Jesus;100.0;Hans dagbok
 B000;Carina;200.0;Hon har skrivit
 C000;Tjöpå;300.0;Test av bokstäver
-D000;Ave Maria;400.0;En fin och dyr bok
+D000;Ave Maria;1100.0;En fin och dyr bok
 E000;Tjohej;500.0;Hur man hälsar
 F000;Korv;600.0;Hur man gör dem
 G000;Engelska;700.0;Lär dig
@@ -11,4 +11,3 @@ V000;Gurkornas hämnd;800.0;Barnbok om grönsaker
 C933;Ostbollar;50.0;De är goda
 Z890;Carp;999.0;En karp
 X888;Obetald Övertid;0.0;Skräckbok
-X999;Soltorkad;99.0;Tomatens berättelse

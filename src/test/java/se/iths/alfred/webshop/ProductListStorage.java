@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ProductListStorage implements ProductStorage {
 
-    List<Product> products = new ArrayList<>(); //ska den vara private?
+    private List<Product> products = new ArrayList<>();
 
     @Override
     public void saveProduct(Product product) {

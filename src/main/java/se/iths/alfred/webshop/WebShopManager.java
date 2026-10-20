@@ -5,12 +5,13 @@ import se.iths.alfred.webshop.model.HalfPriceDiscount;
 import se.iths.alfred.webshop.model.Product;
 import se.iths.alfred.webshop.model.TenPercentDiscount;
 
+import java.io.UncheckedIOException;
 import java.util.List;
 
 public class WebShopManager {
 
-    private ProductStorage productStorage;
-    private OutInputHandler outInputHandler;
+    private final ProductStorage productStorage;
+    private final OutInputHandler outInputHandler;
     private Discount discount;
 
     public WebShopManager(ProductStorage productStorage, OutInputHandler outInputHandler) {
@@ -19,51 +20,54 @@ public class WebShopManager {
     }
 
     void startWebshop() {
-        discount = setDiscount();
+        discount = createDiscount();
         if (discount == null) {
             outInputHandler.info("Ingen rabattkod valdes. Programmet avslutas.");
             return;
         }
-        printMenu();
+        runMenu();
     }
 
-    public Discount setDiscount() {
+    private Discount createDiscount() {
         String discountCode = validateString("Skriv din rabattkod: ");
         if (discountCode == null) {
             return null;
         }
 
+        Discount chosenDiscount;
         if (discountCode.equalsIgnoreCase("halfprice")) {
-            discount = new HalfPriceDiscount("Din rabatt: 50%");
+            chosenDiscount = new HalfPriceDiscount("Din rabatt: 50%");
         } else {
-            discount = new TenPercentDiscount("Din rabatt: 10%");
+            chosenDiscount = new TenPercentDiscount("Din rabatt: 10%");
         }
-        outInputHandler.info(discount.getDescription());
-        return discount;
+        outInputHandler.info(chosenDiscount.getDescription());
+        return chosenDiscount;
     }
 
-    void printMenu() {
-        boolean keepRunning = true;
-        while (keepRunning) {
+    private void runMenu() {
+        while (true) {
             String choice = outInputHandler.menu();
             if (choice == null) {
-                outInputHandler.info("Hejdå!");
-                break;
+                choice = "4";
             }
-            switch (choice) {
-                case "1" -> addProduct();
-                case "2" -> listProducts();
-                case "3" -> searchProducts();
-                case "4" -> {
-                    outInputHandler.info("Hejdå!");
-                    keepRunning = false;
+            try {
+                switch (choice) {
+                    case "1" -> addProduct();
+                    case "2" -> listProducts();
+                    case "3" -> findProduct();
+                    case "4" -> {
+                        outInputHandler.info("Hejdå!");
+                        return;
+                    }
+                    default -> outInputHandler.info("Felaktigt val. Försök igen.");
                 }
-                default -> outInputHandler.info("Felaktigt val. Försök igen.");
+            } catch (UncheckedIOException e) {
+                outInputHandler.info("Fel: " + e.getMessage());
             }
         }
     }
 
-    void addProduct() {
+    private void addProduct() {
         String cancel = "Du avbröt processen. Ingen ny produkt läggs till.";
         outInputHandler.info("\nLägg till produkt");
         String articleNumber = validateString("Mata in artikelnummer: ");
@@ -103,7 +107,7 @@ public class WebShopManager {
                 + " - " + description);
     }
 
-    void listProducts() {
+    private void listProducts() {
         String allProducts = "Alla produkter:\n";
         List<Product> products = getProductsFromStorage();
         for (Product product : products) {
@@ -118,7 +122,7 @@ public class WebShopManager {
 
     }
 
-    void searchProducts() {
+    private void findProduct() {
         outInputHandler.info("Visa information om en produkt");
         String articleNumber = validateString("Mata in produktens artikelnummer: ");
         if (articleNumber == null) {

@@ -3,6 +3,7 @@ package se.iths.alfred.webshop;
 import se.iths.alfred.webshop.model.Product;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class ProductFileStorage implements ProductStorage {
 
-    private Path productsFile = Path.of("products.txt");
+    private final Path productsFile = Path.of("products.txt");
 
     @Override
     public void saveProduct(Product product) {
@@ -21,7 +22,7 @@ public class ProductFileStorage implements ProductStorage {
                     System.lineSeparator(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
         } catch (IOException e) {
-            System.err.println("Fel - Kunde inte skriva till filen: " + e.getMessage());
+            throw new UncheckedIOException("Kunde inte skriva till filen: " + e.getMessage(), e);
         }
     }
 
@@ -38,7 +39,7 @@ public class ProductFileStorage implements ProductStorage {
                 products.add(product);
             }
         } catch (IOException e) {
-            System.err.println("Kunde inte läsa raderna: " + e.getMessage());
+            throw new UncheckedIOException("Kunde inte läsa raderna: " + e.getMessage(), e);
         }
         return products;
     }
