@@ -20,7 +20,7 @@ public class WebShopManager {
     }
 
     void startWebshop() {
-        discount = createDiscount();
+        discount = chooseDiscount();
         if (discount == null) {
             outInputHandler.info("Ingen rabattkod valdes. Programmet avslutas.");
             return;
@@ -28,7 +28,7 @@ public class WebShopManager {
         runMenu();
     }
 
-    private Discount createDiscount() {
+    private Discount chooseDiscount() {
         String discountCode = validateString("Skriv din rabattkod: ");
         if (discountCode == null) {
             return null;
