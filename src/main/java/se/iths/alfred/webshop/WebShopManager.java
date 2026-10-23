@@ -69,7 +69,7 @@ public class WebShopManager {
 
     private void addProduct() {
         String cancel = "Du avbröt processen. Ingen ny produkt läggs till.";
-        outInputHandler.info("\nLägg till produkt");
+        outInputHandler.info("Lägg till produkt");
         String articleNumber = validateString("Mata in artikelnummer: ");
         if (articleNumber == null) {
             outInputHandler.info(cancel);
